@@ -1,14 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:block_flow/app/app.dart';
+import 'package:block_flow/bootstrap.dart';
 
 void main() {
-  runApp(const BlockFlowTestApp());
-}
-
-class BlockFlowTestApp extends StatelessWidget {
-  const BlockFlowTestApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp();
-  }
+  bootstrap(() => const App());
 }
