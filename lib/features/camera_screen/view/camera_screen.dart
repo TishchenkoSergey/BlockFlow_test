@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:camera/camera.dart';
 
 import 'package:block_flow/features/camera_screen/bloc/camera_screen_cubit.dart';
@@ -52,28 +53,30 @@ class _CameraScreenState extends State<CameraScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.double_arrow_outlined),
-                              onPressed: context.read<CameraScreenCubit>().switchCamera,
-                              color: Colors.white,
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                state.selectedOverlay == null
-                                    ? Icons.add_circle_outline_outlined
-                                    : Icons.remove_circle_outline_outlined,
+                      if (!state.isRecording)
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Symbols.forward, size: 32),
+                                onPressed: context.read<CameraScreenCubit>().switchCamera,
+                                color: Colors.white,
                               ),
-                              onPressed: context.read<CameraScreenCubit>().pickOverlay,
-                              color: Colors.white,
-                            ),
-                          ],
+                              IconButton(
+                                icon: Icon(
+                                  state.selectedOverlay == null
+                                      ? Icons.add_circle_outline_outlined
+                                      : Icons.remove_circle_outline_outlined,
+                                  size: 32,
+                                ),
+                                onPressed: context.read<CameraScreenCubit>().pickOverlay,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                       Align(
                         child: RecordButton(
                           isRecording: state.isRecording,
@@ -81,18 +84,21 @@ class _CameraScreenState extends State<CameraScreen> {
                           onTap: context.read<CameraScreenCubit>().takeContent,
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(
-                            state.cameraMode == CameraMode.photo
-                                ? Icons.videocam
-                                : Icons.image_outlined,
+                      if (!state.isRecording)
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: IconButton(
+                              icon: Icon(
+                                state.cameraMode == CameraMode.photo ? Icons.videocam : Icons.image_outlined,
+                                size: 32,
+                              ),
+                              onPressed: context.read<CameraScreenCubit>().changeMode,
+                              color: Colors.white,
+                            ),
                           ),
-                          onPressed: context.read<CameraScreenCubit>().changeMode,
-                          color: Colors.white,
                         ),
-                      ),
                     ],
                   ),
                 ),
