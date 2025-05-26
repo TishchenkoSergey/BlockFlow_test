@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:block_flow/features/camera_screen/bloc/camera_screen_cubit.dart';
 import 'package:camera/camera.dart';
+
+import 'package:block_flow/features/camera_screen/bloc/camera_screen_cubit.dart';
+import '../widgets/widgets.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -44,34 +46,55 @@ class _CameraScreenState extends State<CameraScreen> {
                 bottom: 32,
                 left: 0,
                 right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.double_arrow_outlined),
-                      onPressed: context.read<CameraScreenCubit>().switchCamera,
-                      color: Colors.white,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        state.selectedOverlay == null
-                            ? Icons.add_circle_outline_outlined
-                            : Icons.remove_circle_outline_outlined,
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 80,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.double_arrow_outlined),
+                              onPressed: context.read<CameraScreenCubit>().switchCamera,
+                              color: Colors.white,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                state.selectedOverlay == null
+                                    ? Icons.add_circle_outline_outlined
+                                    : Icons.remove_circle_outline_outlined,
+                              ),
+                              onPressed: context.read<CameraScreenCubit>().pickOverlay,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
                       ),
-                      onPressed: context.read<CameraScreenCubit>().pickOverlay,
-                      color: Colors.white,
-                    ),
-                    IconButton(
-                      icon: Icon(state.isRecording ? Icons.stop : Icons.videocam),
-                      onPressed: context.read<CameraScreenCubit>().recordVideo,
-                      color: Colors.white,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.image_outlined),
-                      onPressed: context.read<CameraScreenCubit>().takePhoto,
-                      color: Colors.white,
-                    ),
-                  ],
+                      Align(
+                        child: RecordButton(
+                          isRecording: state.isRecording,
+                          takePhoto: state.cameraMode == CameraMode.photo,
+                          onTap: context.read<CameraScreenCubit>().takeContent,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(
+                            state.cameraMode == CameraMode.photo
+                                ? Icons.videocam
+                                : Icons.image_outlined,
+                          ),
+                          onPressed: context.read<CameraScreenCubit>().changeMode,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
