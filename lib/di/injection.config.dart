@@ -15,6 +15,8 @@ import 'package:domain/di/injection.module.dart' as _i757;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../services/services.dart';
+
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
   Future<_i174.GetIt> init({
@@ -24,6 +26,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     await _i377.DataPackageModule().init(gh);
     await _i757.DomainPackageModule().init(gh);
+    gh.factory<MediaStoreService>(() => MediaStoreServiceImpl());
     gh.factory<_i607.PickImageService>(() => _i607.PickImageServiceImpl());
     return this;
   }
