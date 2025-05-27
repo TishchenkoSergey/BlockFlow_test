@@ -1,5 +1,5 @@
 enum Routes {
-  mainScreen('main-screen');
+  camera('camera');
 
   const Routes(this.name);
 
