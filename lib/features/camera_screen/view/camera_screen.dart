@@ -44,6 +44,11 @@ class _CameraScreenState extends State<CameraScreen> {
                   child: Opacity(opacity: 0.2, child: Image.memory(state.selectedOverlay!, fit: BoxFit.cover)),
                 ),
               Positioned(
+                top: 16,
+                right: 16,
+                child: RecordingTimer(duration: state.recordingDuration),
+              ),
+              Positioned(
                 bottom: 32,
                 left: 0,
                 right: 0,
