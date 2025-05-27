@@ -21,6 +21,7 @@ dependencies:
   permission_handler: ^11.0.1
   media_store_plus: ^0.1.3
   material_symbols_icons: ^4.2815.1
+  splash_master: ^0.0.2
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +30,6 @@ dev_dependencies:
   very_good_analysis: ^7.0.0
   build_runner: ^2.4.8
   flutter_gen_runner: ^5.4.0
-  flutter_native_splash: ^2.3.10
   injectable_generator: ^2.4.0
   freezed: ^3.0.6
 
@@ -40,5 +40,18 @@ flutter:
   uses-material-design: true
   generate: true
 
+  assets:
+    - assets/logo/
+
 flutter_gen:
   output: lib/app/
+
+splash_master:
+  color: '#FFFFFF'
+  image: 'assets/logo/logo.png'
+  ios_content_mode: 'center'
+  android_gravity: 'center'
+  android_12_and_above:
+    color: '#FFFFFF'
+    image: 'assets/logo/logo.png'
+
