@@ -7,7 +7,7 @@ linter:
     directives_ordering: false
     lines_longer_than_80_chars: false
     avoid_positional_boolean_parameters: false
-    require_trailing_commas: false
+    require_trailing_commas: true
 
 analyzer:
   exclude:

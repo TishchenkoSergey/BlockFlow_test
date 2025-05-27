@@ -21,7 +21,9 @@ class _CameraState extends State<Camera> {
     return BlocBuilder<CameraCubit, CameraState>(
       builder: (context, state) {
         if (state.controller == null || !state.controller!.value.isInitialized) {
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
         return Scaffold(
@@ -32,7 +34,11 @@ class _CameraState extends State<Camera> {
               padding: const EdgeInsets.only(top: 40),
               child: const Text(
                 'Camera test task',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.black),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -49,7 +55,13 @@ class _CameraState extends State<Camera> {
                 ),
               if (state.selectedOverlay != null)
                 Positioned.fill(
-                  child: Opacity(opacity: 0.2, child: Image.memory(state.selectedOverlay!, fit: BoxFit.cover)),
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: Image.memory(
+                      state.selectedOverlay!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               Positioned(
                 top: 16,
@@ -74,7 +86,8 @@ class _CameraState extends State<Camera> {
                             children: [
                               IconButton(
                                 icon: const Icon(Symbols.forward, size: 32),
-                                onPressed: context.read<CameraCubit>().switchCamera,
+                                onPressed:
+                                    context.read<CameraCubit>().switchCamera,
                                 color: Colors.white,
                               ),
                               IconButton(
@@ -84,7 +97,8 @@ class _CameraState extends State<Camera> {
                                       : Icons.remove_circle_outline_outlined,
                                   size: 32,
                                 ),
-                                onPressed: context.read<CameraCubit>().pickOverlay,
+                                onPressed:
+                                    context.read<CameraCubit>().pickOverlay,
                                 color: Colors.white,
                               ),
                             ],
@@ -105,7 +119,9 @@ class _CameraState extends State<Camera> {
                             padding: const EdgeInsets.only(right: 16),
                             child: IconButton(
                               icon: Icon(
-                                state.cameraMode == CameraMode.photo ? Icons.videocam : Icons.image_outlined,
+                                state.cameraMode == CameraMode.photo
+                                    ? Icons.videocam
+                                    : Icons.image_outlined,
                                 size: 32,
                               ),
                               onPressed: context.read<CameraCubit>().changeMode,

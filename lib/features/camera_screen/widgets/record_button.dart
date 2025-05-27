@@ -29,17 +29,20 @@ class _RecordButtonState extends State<RecordButton> with SingleTickerProviderSt
           border: Border.all(color: Colors.white, width: 4),
         ),
         alignment: Alignment.center,
-        child: widget.isPhotoMode
-          ?  const SizedBox.shrink()
-          : AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            width: widget.isRecording ? 24 : 60,
-            height: widget.isRecording ? 24 : 60,
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(widget.isRecording ? 8 : 30),
+        child:
+          widget.isPhotoMode
+            ? const SizedBox.shrink()
+            : AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              width: widget.isRecording ? 24 : 60,
+              height: widget.isRecording ? 24 : 60,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(
+                  widget.isRecording ? 8 : 30,
+                ),
+              ),
             ),
-          ),
       ),
     );
   }
