@@ -32,6 +32,7 @@ class AppRoute {
           create: (context) => CameraScreenCubit(
             serviceLocator.get(),
             serviceLocator.get(),
+            serviceLocator.get(),
           ),
           child: const CameraScreen(),
         ),
