@@ -80,8 +80,9 @@ class _CameraScreenState extends State<CameraScreen> {
                       Align(
                         child: RecordButton(
                           isRecording: state.isRecording,
-                          takePhoto: state.cameraMode == CameraMode.photo,
+                          isPhotoMode: state.cameraMode == CameraMode.photo,
                           onTap: context.read<CameraScreenCubit>().takeContent,
+                          key: ValueKey(state.isRecording),
                         ),
                       ),
                       if (!state.isRecording)

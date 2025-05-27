@@ -55,7 +55,19 @@ class CameraScreenCubit extends Cubit<CameraScreenState> {
     }
   }
 
-  Future<void> takePhoto() async {
+  Future<void> changeMode() async {
+    emit(state.copyWith(cameraMode: state.cameraMode == CameraMode.photo ? CameraMode.video : CameraMode.photo));
+  }
+
+  Future<void> takeContent() async {
+    if (state.cameraMode == CameraMode.photo) {
+      await _takePhoto();
+    } else {
+      await _recordVideo();
+    }
+  }
+
+  Future<void> _takePhoto() async {
     final controller = state.controller;
     if (controller == null || !controller.value.isInitialized) return;
 
@@ -64,7 +76,7 @@ class CameraScreenCubit extends Cubit<CameraScreenState> {
     await _mediaStoreService.saveImage(File(file.path));
   }
 
-  Future<void> recordVideo() async {
+  Future<void> _recordVideo() async {
     final controller = state.controller;
     if (controller == null || !controller.value.isInitialized) return;
 
