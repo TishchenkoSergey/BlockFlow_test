@@ -33,6 +33,7 @@ class AppRoute {
                     serviceLocator.get(),
                     serviceLocator.get(),
                     serviceLocator.get(),
+                    serviceLocator.get(),
                   ),
               child: const Camera(),
             ),

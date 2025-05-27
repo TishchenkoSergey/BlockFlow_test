@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:camera/camera.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'package:block_flow/services/services.dart';
 
@@ -17,6 +16,7 @@ class CameraCubit extends Cubit<CameraState> {
     this._pickImageService,
     this._mediaStoreService,
     this._timerService,
+    this._cameraService,
   ) : super(const CameraState()) {
     _init();
   }
@@ -24,26 +24,29 @@ class CameraCubit extends Cubit<CameraState> {
   final PickImageService _pickImageService;
   final MediaStoreService _mediaStoreService;
   final RecordingTimerService _timerService;
+  final CameraService _cameraService;
 
   Future<void> _init() async {
-    final status = await Permission.camera.request();
-    if (!status.isGranted) return;
+    final success = await _cameraService.initialize();
+    if (!success) return;
 
-    final cameras = await availableCameras();
-    final controller = CameraController(cameras[state.selectedCameraIndex], ResolutionPreset.high);
-
-    await controller.initialize();
-
-    emit(state.copyWith(cameras: cameras, controller: controller));
+    emit(
+      state.copyWith(
+        cameras: _cameraService.cameras,
+        selectedCameraIndex: _cameraService.selectedCameraIndex,
+        controller: _cameraService.controller,
+      ),
+    );
   }
 
   Future<void> switchCamera() async {
-    final selectedIndex = (state.selectedCameraIndex + 1) % state.cameras.length;
-    final controller = CameraController(state.cameras[selectedIndex], ResolutionPreset.high);
-
-    await controller.initialize();
-
-    emit(state.copyWith(selectedCameraIndex: selectedIndex, controller: controller));
+    await _cameraService.switchCamera();
+    emit(
+      state.copyWith(
+        selectedCameraIndex: _cameraService.selectedCameraIndex,
+        controller: _cameraService.controller,
+      ),
+    );
   }
 
   Future<void> pickOverlay() async {
@@ -70,10 +73,8 @@ class CameraCubit extends Cubit<CameraState> {
   }
 
   Future<void> _takePhoto() async {
-    final controller = state.controller;
-    if (controller == null || !controller.value.isInitialized) return;
-
-    final file = await controller.takePicture();
+    final file = await _cameraService.takePhoto();
+    if (file == null) return;
 
     emit(state.copyWith(showFlashOverlay: true));
 
@@ -87,17 +88,15 @@ class CameraCubit extends Cubit<CameraState> {
   }
 
   Future<void> _recordVideo() async {
-    final controller = state.controller;
-    if (controller == null || !controller.value.isInitialized) return;
-
     if (state.isRecording) {
-      final file = await controller.stopVideoRecording();
+      final file = await _cameraService.stopVideoRecording();
+      if (file == null) return;
+
       _timerService.stop();
       emit(state.copyWith(isRecording: false, recordingDuration: Duration.zero));
       await _mediaStoreService.saveVideo(File(file.path));
     } else {
-      await controller.prepareForVideoRecording();
-      await controller.startVideoRecording();
+      await _cameraService.startVideoRecording();
       _timerService.start(
         onTick: (duration) {
           emit(state.copyWith(recordingDuration: duration));

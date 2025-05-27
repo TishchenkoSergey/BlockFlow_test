@@ -26,12 +26,12 @@ $CameraStateCopyWith<CameraState> get copyWith => _$CameraStateCopyWithImpl<Came
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CameraState&&const DeepCollectionEquality().equals(other.cameras, cameras)&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay)&&(identical(other.controller, controller) || other.controller == controller));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CameraState&&const DeepCollectionEquality().equals(other.cameras, cameras)&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay)&&const DeepCollectionEquality().equals(other.controller, controller));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(cameras),selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay),controller);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(cameras),selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay),const DeepCollectionEquality().hash(controller));
 
 @override
 String toString() {
@@ -112,12 +112,12 @@ _$CameraStateCopyWith<_CameraState> get copyWith => __$CameraStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CameraState&&const DeepCollectionEquality().equals(other._cameras, _cameras)&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay)&&(identical(other.controller, controller) || other.controller == controller));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CameraState&&const DeepCollectionEquality().equals(other._cameras, _cameras)&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay)&&const DeepCollectionEquality().equals(other.controller, controller));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_cameras),selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay),controller);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_cameras),selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay),const DeepCollectionEquality().hash(controller));
 
 @override
 String toString() {
