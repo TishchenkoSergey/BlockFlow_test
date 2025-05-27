@@ -29,7 +29,11 @@ class AppRoute {
       path: '/${Routes.cameraScreen.name}',
       pageBuilder: (context, state) => CupertinoPage(
         child: BlocProvider(
-          create: (context) => CameraScreenCubit(serviceLocator.get()),
+          create: (context) => CameraScreenCubit(
+            serviceLocator.get(),
+            serviceLocator.get(),
+            serviceLocator.get(),
+          ),
           child: const CameraScreen(),
         ),
       ),
