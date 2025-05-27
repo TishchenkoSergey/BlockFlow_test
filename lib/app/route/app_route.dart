@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:block_flow/features/features.dart';
-import 'package:block_flow/features/camera_screen/camera.dart';
+import 'package:block_flow/services/services.dart';
 
 import 'app_route_enum.dart';
 
@@ -14,10 +14,20 @@ class AppRoute {
 
   final GetIt serviceLocator;
 
+  PermissionsService get permissionsService => serviceLocator.get<PermissionsService>();
+
   GoRouter build(BuildContext context) {
     return GoRouter(
-      routes: [_buildCameraPage()],
+      refreshListenable: permissionsService,
+      routes: [_buildCameraPage(), _buildPermissionPage()],
       initialLocation: '/${Routes.camera.name}',
+      redirect: (context, state) {
+        if (!permissionsService.mediaPermissionsStatus.isGranted) {
+          return '/${Routes.permissions.name}';
+        } else {
+          return '/${Routes.camera.name}';
+        }
+      },
     );
   }
 
@@ -36,6 +46,20 @@ class AppRoute {
                     serviceLocator.get(),
                   ),
               child: const Camera(),
+            ),
+          ),
+    );
+  }
+
+  GoRoute _buildPermissionPage() {
+    return GoRoute(
+      name: Routes.permissions.name,
+      path: '/${Routes.permissions.name}',
+      pageBuilder:
+          (context, state) => CupertinoPage(
+            child: BlocProvider(
+              create: (context) => PermissionsCubit(serviceLocator.get()),
+              child: const PermissionScreen(),
             ),
           ),
     );
