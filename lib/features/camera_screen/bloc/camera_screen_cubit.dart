@@ -13,13 +13,17 @@ part 'camera_screen_state.dart';
 part 'camera_screen_cubit.freezed.dart';
 
 class CameraScreenCubit extends Cubit<CameraScreenState> {
-  CameraScreenCubit(this._pickImageService, this._mediaStoreService)
-      : super(const CameraScreenState()) {
+  CameraScreenCubit(
+      this._pickImageService,
+      this._mediaStoreService,
+      this._timerService,
+  ) : super(const CameraScreenState()) {
     _init();
   }
 
   final PickImageService _pickImageService;
   final MediaStoreService _mediaStoreService;
+  final RecordingTimerService _timerService;
 
   Future<void> _init() async {
     final status = await Permission.camera.request();
@@ -82,11 +86,15 @@ class CameraScreenCubit extends Cubit<CameraScreenState> {
 
     if (state.isRecording) {
       final file = await controller.stopVideoRecording();
-      emit(state.copyWith(isRecording: false));
+      _timerService.stop();
+      emit(state.copyWith(isRecording: false, recordingDuration: Duration.zero));
       await _mediaStoreService.saveVideo(File(file.path));
     } else {
       await controller.prepareForVideoRecording();
       await controller.startVideoRecording();
+      _timerService.start(onTick: (duration) {
+        emit(state.copyWith(recordingDuration: duration));
+      });
       emit(state.copyWith(isRecording: true));
     }
   }

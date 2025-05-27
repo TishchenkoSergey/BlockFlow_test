@@ -12,6 +12,7 @@ sealed class CameraScreenState with _$CameraScreenState {
     @Default(0) int selectedCameraIndex,
     @Default(false) bool isRecording,
     @Default(CameraMode.video) CameraMode cameraMode,
+    @Default(Duration.zero) Duration recordingDuration,
     Uint8List? selectedOverlay,
     CameraController? controller,
   }) = _CameraScreenState;
