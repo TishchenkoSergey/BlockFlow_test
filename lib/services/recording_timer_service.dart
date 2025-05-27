@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:injectable/injectable.dart';
 
@@ -6,6 +7,8 @@ abstract class RecordingTimerService {
   void start({required void Function(Duration) onTick});
 
   void stop();
+
+  void delayEffect({required VoidCallback onDone});
 }
 
 @Injectable(as: RecordingTimerService)
@@ -31,5 +34,10 @@ class RecordingTimerServiceImpl implements RecordingTimerService {
     _timer = null;
     _onTick = null;
     _elapsed = Duration.zero;
+  }
+
+  @override
+  void delayEffect({required VoidCallback onDone}) {
+    Future.delayed(const Duration(milliseconds: 200), onDone);
   }
 }
