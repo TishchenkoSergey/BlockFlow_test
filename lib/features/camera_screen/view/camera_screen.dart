@@ -39,6 +39,14 @@ class _CameraScreenState extends State<CameraScreen> {
           body: Stack(
             children: [
               Positioned.fill(child: CameraPreview(state.controller!)),
+              if (state.showFlashOverlay)
+                Positioned.fill(
+                  child: AnimatedOpacity(
+                    opacity: state.showFlashOverlay ? 0.4 : 0.0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Container(color: Colors.white),
+                  ),
+                ),
               if (state.selectedOverlay != null)
                 Positioned.fill(
                   child: Opacity(opacity: 0.2, child: Image.memory(state.selectedOverlay!, fit: BoxFit.cover)),

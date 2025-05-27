@@ -77,7 +77,13 @@ class CameraScreenCubit extends Cubit<CameraScreenState> {
 
     final file = await controller.takePicture();
 
+    emit(state.copyWith(showFlashOverlay: true));
+
     await _mediaStoreService.saveImage(File(file.path));
+
+    _timerService.delayEffect(onDone : () {
+      emit(state.copyWith(showFlashOverlay: false));
+    });
   }
 
   Future<void> _recordVideo() async {
