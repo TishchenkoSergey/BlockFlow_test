@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:block_flow/features/features.dart';
-import 'package:block_flow/features/camera_screen/camera_screen.dart';
+import 'package:block_flow/features/camera_screen/camera.dart';
 
 import 'app_route_enum.dart';
 
@@ -19,22 +19,22 @@ class AppRoute {
       routes: [
         _buildCameraPage(),
       ],
-      initialLocation: '/${Routes.cameraScreen.name}',
+      initialLocation: '/${Routes.camera.name}',
     );
   }
 
   GoRoute _buildCameraPage() {
     return GoRoute(
-      name: Routes.cameraScreen.name,
-      path: '/${Routes.cameraScreen.name}',
+      name: Routes.camera.name,
+      path: '/${Routes.camera.name}',
       pageBuilder: (context, state) => CupertinoPage(
         child: BlocProvider(
-          create: (context) => CameraScreenCubit(
+          create: (context) => CameraCubit(
             serviceLocator.get(),
             serviceLocator.get(),
             serviceLocator.get(),
           ),
-          child: const CameraScreen(),
+          child: const Camera(),
         ),
       ),
     );
