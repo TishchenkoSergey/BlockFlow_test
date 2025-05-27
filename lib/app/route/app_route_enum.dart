@@ -1,5 +1,6 @@
 enum Routes {
-  camera('camera');
+  camera('camera'),
+  permissions('permissions');
 
   const Routes(this.name);
 
