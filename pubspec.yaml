@@ -22,12 +22,6 @@ dependencies:
   media_store_plus: ^0.1.3
   material_symbols_icons: ^4.2815.1
 
-  domain:
-    path: ./packages/domain
-
-  data:
-    path: ./packages/data
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
