@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:block_flow/services/services.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:flutter/widgets.dart';
@@ -40,6 +41,13 @@ Future<void> bootstrap(FutureOr<Widget> Function(BootstrapResult result) builder
   Bloc.observer = const AppBlocObserver();
 
   final serviceLocator = await configureDependencies();
+
+  // Initialize services
+  final permissionsService = PermissionsService();
+  await permissionsService.requestPermissions();
+
+  // Register services in the service locator
+  serviceLocator.registerSingleton<PermissionsService>(permissionsService);
 
   final bootstrapResult = BootstrapResult(serviceLocator);
 
