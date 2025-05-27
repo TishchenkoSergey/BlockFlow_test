@@ -5,20 +5,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:camera/camera.dart';
 
-import 'package:block_flow/features/camera_screen/bloc/camera_screen_cubit.dart';
+import 'package:block_flow/features/camera_screen/bloc/camera_cubit.dart';
 import '../widgets/widgets.dart';
 
-class CameraScreen extends StatefulWidget {
-  const CameraScreen({super.key});
+class Camera extends StatefulWidget {
+  const Camera({super.key});
 
   @override
-  State<CameraScreen> createState() => _CameraScreenState();
+  State<Camera> createState() => _CameraState();
 }
 
-class _CameraScreenState extends State<CameraScreen> {
+class _CameraState extends State<Camera> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CameraScreenCubit, CameraScreenState>(
+    return BlocBuilder<CameraCubit, CameraState>(
       builder: (context, state) {
         if (state.controller == null || !state.controller!.value.isInitialized) {
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -74,7 +74,7 @@ class _CameraScreenState extends State<CameraScreen> {
                             children: [
                               IconButton(
                                 icon: const Icon(Symbols.forward, size: 32),
-                                onPressed: context.read<CameraScreenCubit>().switchCamera,
+                                onPressed: context.read<CameraCubit>().switchCamera,
                                 color: Colors.white,
                               ),
                               IconButton(
@@ -84,7 +84,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                       : Icons.remove_circle_outline_outlined,
                                   size: 32,
                                 ),
-                                onPressed: context.read<CameraScreenCubit>().pickOverlay,
+                                onPressed: context.read<CameraCubit>().pickOverlay,
                                 color: Colors.white,
                               ),
                             ],
@@ -94,7 +94,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         child: RecordButton(
                           isRecording: state.isRecording,
                           isPhotoMode: state.cameraMode == CameraMode.photo,
-                          onTap: context.read<CameraScreenCubit>().takeContent,
+                          onTap: context.read<CameraCubit>().takeContent,
                           key: ValueKey(state.isRecording),
                         ),
                       ),
@@ -108,7 +108,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 state.cameraMode == CameraMode.photo ? Icons.videocam : Icons.image_outlined,
                                 size: 32,
                               ),
-                              onPressed: context.read<CameraScreenCubit>().changeMode,
+                              onPressed: context.read<CameraCubit>().changeMode,
                               color: Colors.white,
                             ),
                           ),

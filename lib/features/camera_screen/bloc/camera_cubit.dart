@@ -8,16 +8,16 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:block_flow/services/services.dart';
 
-part 'camera_screen_state.dart';
+part 'camera_state.dart';
 
-part 'camera_screen_cubit.freezed.dart';
+part 'camera_cubit.freezed.dart';
 
-class CameraScreenCubit extends Cubit<CameraScreenState> {
-  CameraScreenCubit(
+class CameraCubit extends Cubit<CameraState> {
+  CameraCubit(
       this._pickImageService,
       this._mediaStoreService,
       this._timerService,
-  ) : super(const CameraScreenState()) {
+  ) : super(const CameraState()) {
     _init();
   }
 

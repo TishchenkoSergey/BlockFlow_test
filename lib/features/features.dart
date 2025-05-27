@@ -1,1 +1,1 @@
-export 'camera_screen/camera_screen.dart';
+export 'camera_screen/camera.dart';

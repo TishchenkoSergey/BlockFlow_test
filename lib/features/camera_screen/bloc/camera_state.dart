@@ -1,4 +1,4 @@
-part of 'camera_screen_cubit.dart';
+part of 'camera_cubit.dart';
 
 enum CameraMode {
   photo,
@@ -6,8 +6,8 @@ enum CameraMode {
 }
 
 @freezed
-sealed class CameraScreenState with _$CameraScreenState {
-  const factory CameraScreenState({
+sealed class CameraState with _$CameraState {
+  const factory CameraState({
     @Default([]) List<CameraDescription> cameras,
     @Default(0) int selectedCameraIndex,
     @Default(false) bool isRecording,
@@ -16,7 +16,7 @@ sealed class CameraScreenState with _$CameraScreenState {
     @Default(false) bool showFlashOverlay,
     Uint8List? selectedOverlay,
     CameraController? controller,
-  }) = _CameraScreenState;
+  }) = _CameraState;
 
-  const CameraScreenState._();
+  const CameraState._();
 }
