@@ -13,7 +13,9 @@ abstract class PickImageService {
 class PickImageServiceImpl implements PickImageService {
   @override
   Future<Uint8List?> selectImage() async {
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedImage = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
     if (pickedImage != null) {
       return pickedImage.readAsBytes();
     }

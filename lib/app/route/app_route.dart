@@ -16,9 +16,7 @@ class AppRoute {
 
   GoRouter build(BuildContext context) {
     return GoRouter(
-      routes: [
-        _buildCameraPage(),
-      ],
+      routes: [_buildCameraPage()],
       initialLocation: '/${Routes.camera.name}',
     );
   }
@@ -27,16 +25,18 @@ class AppRoute {
     return GoRoute(
       name: Routes.camera.name,
       path: '/${Routes.camera.name}',
-      pageBuilder: (context, state) => CupertinoPage(
-        child: BlocProvider(
-          create: (context) => CameraCubit(
-            serviceLocator.get(),
-            serviceLocator.get(),
-            serviceLocator.get(),
+      pageBuilder:
+          (context, state) => CupertinoPage(
+            child: BlocProvider(
+              create:
+                  (context) => CameraCubit(
+                    serviceLocator.get(),
+                    serviceLocator.get(),
+                    serviceLocator.get(),
+                  ),
+              child: const Camera(),
+            ),
           ),
-          child: const Camera(),
-        ),
-      ),
     );
   }
 }

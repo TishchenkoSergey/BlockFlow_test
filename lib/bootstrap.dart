@@ -25,9 +25,7 @@ class AppBlocObserver extends BlocObserver {
 }
 
 class BootstrapResult {
-  BootstrapResult(
-      this.serviceLocator,
-      );
+  BootstrapResult(this.serviceLocator);
 
   final GetIt serviceLocator;
 }
@@ -43,9 +41,7 @@ Future<void> bootstrap(FutureOr<Widget> Function(BootstrapResult result) builder
 
   final serviceLocator = await configureDependencies();
 
-  final bootstrapResult = BootstrapResult(
-    serviceLocator,
-  );
+  final bootstrapResult = BootstrapResult(serviceLocator);
 
   runApp(await builder(bootstrapResult));
 }

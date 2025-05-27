@@ -5,10 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:block_flow/app/route/route.dart';
 
 class App extends StatefulWidget {
-  const App({
-    required this.serviceLocator,
-    super.key,
-  });
+  const App({required this.serviceLocator, super.key,});
 
   final GetIt serviceLocator;
 

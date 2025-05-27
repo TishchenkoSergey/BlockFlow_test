@@ -14,9 +14,9 @@ part 'camera_cubit.freezed.dart';
 
 class CameraCubit extends Cubit<CameraState> {
   CameraCubit(
-      this._pickImageService,
-      this._mediaStoreService,
-      this._timerService,
+    this._pickImageService,
+    this._mediaStoreService,
+    this._timerService,
   ) : super(const CameraState()) {
     _init();
   }
@@ -30,8 +30,7 @@ class CameraCubit extends Cubit<CameraState> {
     if (!status.isGranted) return;
 
     final cameras = await availableCameras();
-    final controller =
-    CameraController(cameras[state.selectedCameraIndex], ResolutionPreset.high);
+    final controller = CameraController(cameras[state.selectedCameraIndex], ResolutionPreset.high);
 
     await controller.initialize();
 
@@ -40,8 +39,7 @@ class CameraCubit extends Cubit<CameraState> {
 
   Future<void> switchCamera() async {
     final selectedIndex = (state.selectedCameraIndex + 1) % state.cameras.length;
-    final controller =
-    CameraController(state.cameras[selectedIndex], ResolutionPreset.high);
+    final controller = CameraController(state.cameras[selectedIndex], ResolutionPreset.high);
 
     await controller.initialize();
 
@@ -81,9 +79,11 @@ class CameraCubit extends Cubit<CameraState> {
 
     await _mediaStoreService.saveImage(File(file.path));
 
-    _timerService.delayEffect(onDone : () {
-      emit(state.copyWith(showFlashOverlay: false));
-    });
+    _timerService.delayEffect(
+      onDone: () {
+        emit(state.copyWith(showFlashOverlay: false));
+      },
+    );
   }
 
   Future<void> _recordVideo() async {
@@ -98,9 +98,11 @@ class CameraCubit extends Cubit<CameraState> {
     } else {
       await controller.prepareForVideoRecording();
       await controller.startVideoRecording();
-      _timerService.start(onTick: (duration) {
-        emit(state.copyWith(recordingDuration: duration));
-      });
+      _timerService.start(
+        onTick: (duration) {
+          emit(state.copyWith(recordingDuration: duration));
+        },
+      );
       emit(state.copyWith(isRecording: true));
     }
   }
