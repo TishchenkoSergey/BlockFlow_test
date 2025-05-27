@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:camera/camera.dart';
 
-import 'package:block_flow/features/camera_screen/bloc/camera_cubit.dart';
+import 'package:block_flow/features/camera/bloc/camera_cubit.dart';
 import '../widgets/widgets.dart';
 
 class Camera extends StatefulWidget {
