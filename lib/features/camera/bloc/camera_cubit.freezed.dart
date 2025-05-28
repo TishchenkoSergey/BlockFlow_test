@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CameraState {
 
- List<CameraDescription> get cameras; int get selectedCameraIndex; bool get isRecording; CameraMode get cameraMode; Duration get recordingDuration; bool get showFlashOverlay; Uint8List? get selectedOverlay; CameraController? get controller;
+ int get selectedCameraIndex; bool get isRecording; CameraMode get cameraMode; Duration get recordingDuration; bool get showFlashOverlay; Uint8List? get selectedOverlay;
 /// Create a copy of CameraState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CameraStateCopyWith<CameraState> get copyWith => _$CameraStateCopyWithImpl<Came
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CameraState&&const DeepCollectionEquality().equals(other.cameras, cameras)&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay)&&const DeepCollectionEquality().equals(other.controller, controller));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CameraState&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(cameras),selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay),const DeepCollectionEquality().hash(controller));
+int get hashCode => Object.hash(runtimeType,selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay));
 
 @override
 String toString() {
-  return 'CameraState(cameras: $cameras, selectedCameraIndex: $selectedCameraIndex, isRecording: $isRecording, cameraMode: $cameraMode, recordingDuration: $recordingDuration, showFlashOverlay: $showFlashOverlay, selectedOverlay: $selectedOverlay, controller: $controller)';
+  return 'CameraState(selectedCameraIndex: $selectedCameraIndex, isRecording: $isRecording, cameraMode: $cameraMode, recordingDuration: $recordingDuration, showFlashOverlay: $showFlashOverlay, selectedOverlay: $selectedOverlay)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CameraStateCopyWith<$Res>  {
   factory $CameraStateCopyWith(CameraState value, $Res Function(CameraState) _then) = _$CameraStateCopyWithImpl;
 @useResult
 $Res call({
- List<CameraDescription> cameras, int selectedCameraIndex, bool isRecording, CameraMode cameraMode, Duration recordingDuration, bool showFlashOverlay, Uint8List? selectedOverlay, CameraController? controller
+ int selectedCameraIndex, bool isRecording, CameraMode cameraMode, Duration recordingDuration, bool showFlashOverlay, Uint8List? selectedOverlay
 });
 
 
@@ -63,17 +63,15 @@ class _$CameraStateCopyWithImpl<$Res>
 
 /// Create a copy of CameraState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? cameras = null,Object? selectedCameraIndex = null,Object? isRecording = null,Object? cameraMode = null,Object? recordingDuration = null,Object? showFlashOverlay = null,Object? selectedOverlay = freezed,Object? controller = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? selectedCameraIndex = null,Object? isRecording = null,Object? cameraMode = null,Object? recordingDuration = null,Object? showFlashOverlay = null,Object? selectedOverlay = freezed,}) {
   return _then(_self.copyWith(
-cameras: null == cameras ? _self.cameras : cameras // ignore: cast_nullable_to_non_nullable
-as List<CameraDescription>,selectedCameraIndex: null == selectedCameraIndex ? _self.selectedCameraIndex : selectedCameraIndex // ignore: cast_nullable_to_non_nullable
+selectedCameraIndex: null == selectedCameraIndex ? _self.selectedCameraIndex : selectedCameraIndex // ignore: cast_nullable_to_non_nullable
 as int,isRecording: null == isRecording ? _self.isRecording : isRecording // ignore: cast_nullable_to_non_nullable
 as bool,cameraMode: null == cameraMode ? _self.cameraMode : cameraMode // ignore: cast_nullable_to_non_nullable
 as CameraMode,recordingDuration: null == recordingDuration ? _self.recordingDuration : recordingDuration // ignore: cast_nullable_to_non_nullable
 as Duration,showFlashOverlay: null == showFlashOverlay ? _self.showFlashOverlay : showFlashOverlay // ignore: cast_nullable_to_non_nullable
 as bool,selectedOverlay: freezed == selectedOverlay ? _self.selectedOverlay : selectedOverlay // ignore: cast_nullable_to_non_nullable
-as Uint8List?,controller: freezed == controller ? _self.controller : controller // ignore: cast_nullable_to_non_nullable
-as CameraController?,
+as Uint8List?,
   ));
 }
 
@@ -84,15 +82,8 @@ as CameraController?,
 
 
 class _CameraState extends CameraState {
-  const _CameraState({final  List<CameraDescription> cameras = const [], this.selectedCameraIndex = 0, this.isRecording = false, this.cameraMode = CameraMode.video, this.recordingDuration = Duration.zero, this.showFlashOverlay = false, this.selectedOverlay, this.controller}): _cameras = cameras,super._();
+  const _CameraState({this.selectedCameraIndex = 0, this.isRecording = false, this.cameraMode = CameraMode.video, this.recordingDuration = Duration.zero, this.showFlashOverlay = false, this.selectedOverlay}): super._();
   
-
- final  List<CameraDescription> _cameras;
-@override@JsonKey() List<CameraDescription> get cameras {
-  if (_cameras is EqualUnmodifiableListView) return _cameras;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_cameras);
-}
 
 @override@JsonKey() final  int selectedCameraIndex;
 @override@JsonKey() final  bool isRecording;
@@ -100,7 +91,6 @@ class _CameraState extends CameraState {
 @override@JsonKey() final  Duration recordingDuration;
 @override@JsonKey() final  bool showFlashOverlay;
 @override final  Uint8List? selectedOverlay;
-@override final  CameraController? controller;
 
 /// Create a copy of CameraState
 /// with the given fields replaced by the non-null parameter values.
@@ -112,16 +102,16 @@ _$CameraStateCopyWith<_CameraState> get copyWith => __$CameraStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CameraState&&const DeepCollectionEquality().equals(other._cameras, _cameras)&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay)&&const DeepCollectionEquality().equals(other.controller, controller));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CameraState&&(identical(other.selectedCameraIndex, selectedCameraIndex) || other.selectedCameraIndex == selectedCameraIndex)&&(identical(other.isRecording, isRecording) || other.isRecording == isRecording)&&(identical(other.cameraMode, cameraMode) || other.cameraMode == cameraMode)&&(identical(other.recordingDuration, recordingDuration) || other.recordingDuration == recordingDuration)&&(identical(other.showFlashOverlay, showFlashOverlay) || other.showFlashOverlay == showFlashOverlay)&&const DeepCollectionEquality().equals(other.selectedOverlay, selectedOverlay));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_cameras),selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay),const DeepCollectionEquality().hash(controller));
+int get hashCode => Object.hash(runtimeType,selectedCameraIndex,isRecording,cameraMode,recordingDuration,showFlashOverlay,const DeepCollectionEquality().hash(selectedOverlay));
 
 @override
 String toString() {
-  return 'CameraState(cameras: $cameras, selectedCameraIndex: $selectedCameraIndex, isRecording: $isRecording, cameraMode: $cameraMode, recordingDuration: $recordingDuration, showFlashOverlay: $showFlashOverlay, selectedOverlay: $selectedOverlay, controller: $controller)';
+  return 'CameraState(selectedCameraIndex: $selectedCameraIndex, isRecording: $isRecording, cameraMode: $cameraMode, recordingDuration: $recordingDuration, showFlashOverlay: $showFlashOverlay, selectedOverlay: $selectedOverlay)';
 }
 
 
@@ -132,7 +122,7 @@ abstract mixin class _$CameraStateCopyWith<$Res> implements $CameraStateCopyWith
   factory _$CameraStateCopyWith(_CameraState value, $Res Function(_CameraState) _then) = __$CameraStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<CameraDescription> cameras, int selectedCameraIndex, bool isRecording, CameraMode cameraMode, Duration recordingDuration, bool showFlashOverlay, Uint8List? selectedOverlay, CameraController? controller
+ int selectedCameraIndex, bool isRecording, CameraMode cameraMode, Duration recordingDuration, bool showFlashOverlay, Uint8List? selectedOverlay
 });
 
 
@@ -149,17 +139,15 @@ class __$CameraStateCopyWithImpl<$Res>
 
 /// Create a copy of CameraState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? cameras = null,Object? selectedCameraIndex = null,Object? isRecording = null,Object? cameraMode = null,Object? recordingDuration = null,Object? showFlashOverlay = null,Object? selectedOverlay = freezed,Object? controller = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? selectedCameraIndex = null,Object? isRecording = null,Object? cameraMode = null,Object? recordingDuration = null,Object? showFlashOverlay = null,Object? selectedOverlay = freezed,}) {
   return _then(_CameraState(
-cameras: null == cameras ? _self._cameras : cameras // ignore: cast_nullable_to_non_nullable
-as List<CameraDescription>,selectedCameraIndex: null == selectedCameraIndex ? _self.selectedCameraIndex : selectedCameraIndex // ignore: cast_nullable_to_non_nullable
+selectedCameraIndex: null == selectedCameraIndex ? _self.selectedCameraIndex : selectedCameraIndex // ignore: cast_nullable_to_non_nullable
 as int,isRecording: null == isRecording ? _self.isRecording : isRecording // ignore: cast_nullable_to_non_nullable
 as bool,cameraMode: null == cameraMode ? _self.cameraMode : cameraMode // ignore: cast_nullable_to_non_nullable
 as CameraMode,recordingDuration: null == recordingDuration ? _self.recordingDuration : recordingDuration // ignore: cast_nullable_to_non_nullable
 as Duration,showFlashOverlay: null == showFlashOverlay ? _self.showFlashOverlay : showFlashOverlay // ignore: cast_nullable_to_non_nullable
 as bool,selectedOverlay: freezed == selectedOverlay ? _self.selectedOverlay : selectedOverlay // ignore: cast_nullable_to_non_nullable
-as Uint8List?,controller: freezed == controller ? _self.controller : controller // ignore: cast_nullable_to_non_nullable
-as CameraController?,
+as Uint8List?,
   ));
 }
 
