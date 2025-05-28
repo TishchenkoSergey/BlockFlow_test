@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
@@ -10,7 +11,15 @@ part 'camera_state.dart';
 part 'camera_cubit.freezed.dart';
 
 class CameraCubit extends Cubit<CameraState> {
-  CameraCubit(this._pickImageService) : super(const CameraState());
+  CameraCubit(
+    this._pickImageService,
+    this._mediaStoreService,
+    this._timerService,
+  ) : super(const CameraState());
+
+  final MediaStoreService _mediaStoreService;
+
+  final RecordingTimerService _timerService;
 
   final PickImageService _pickImageService;
 
@@ -49,5 +58,27 @@ class CameraCubit extends Cubit<CameraState> {
     } else {
       emit(state.copyWith(selectedOverlay: null));
     }
+  }
+
+  Future<void> stopVideoRecording(String path) async {
+    _timerService.stop();
+    setIsRecording(false);
+    await _mediaStoreService.saveVideo(File(path));
+  }
+
+  Future<void> startVideoRecording() async {
+    _timerService.start(onTick: updateRecordingDuration);
+    setIsRecording(true);
+  }
+
+  Future<void> saveOverlay(String path) async {
+    await showFlashOverlayOnce();
+    await _mediaStoreService.saveImage(File(path));
+  }
+
+  @override
+  Future<void> close() {
+    _timerService.stop();
+    return super.close();
   }
 }
