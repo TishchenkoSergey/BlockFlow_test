@@ -1,1 +1,2 @@
-export 'camera_screen/camera.dart';
+export 'camera/camera.dart';
+export 'permissions/permissions.dart';

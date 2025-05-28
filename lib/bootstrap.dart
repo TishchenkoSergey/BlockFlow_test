@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:block_flow/services/services.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 
 import 'di/di.dart';
 
@@ -41,7 +43,21 @@ Future<void> bootstrap(FutureOr<Widget> Function(BootstrapResult result) builder
 
   final serviceLocator = await configureDependencies();
 
+  // Initialize services
+  final permissionsService = PermissionsService();
+  await permissionsService.requestPermissions();
+
+  // Register services in the service locator
+  serviceLocator.registerSingleton<PermissionsService>(permissionsService);
+
   final bootstrapResult = BootstrapResult(serviceLocator);
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   runApp(await builder(bootstrapResult));
 }

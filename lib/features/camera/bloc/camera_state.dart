@@ -8,14 +8,12 @@ enum CameraMode {
 @freezed
 sealed class CameraState with _$CameraState {
   const factory CameraState({
-    @Default([]) List<CameraDescription> cameras,
     @Default(0) int selectedCameraIndex,
     @Default(false) bool isRecording,
     @Default(CameraMode.video) CameraMode cameraMode,
     @Default(Duration.zero) Duration recordingDuration,
     @Default(false) bool showFlashOverlay,
     Uint8List? selectedOverlay,
-    CameraController? controller,
   }) = _CameraState;
 
   const CameraState._();
