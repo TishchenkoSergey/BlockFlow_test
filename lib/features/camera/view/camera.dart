@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,22 +6,25 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:camera/camera.dart';
 
 import 'package:block_flow/features/camera/camera.dart';
-import 'package:block_flow/services/services.dart';
 
 class Camera extends StatefulWidget {
-  const Camera({super.key});
+  const Camera({
+    required this.cameraUtil,
+    super.key,
+  });
+
+  final CameraUtil cameraUtil;
 
   @override
   State<Camera> createState() => _CameraState();
 }
 
 class _CameraState extends State<Camera> {
-  final CameraService _cameraService = CameraServiceImpl();
-  final MediaStoreService _mediaStoreService = MediaStoreServiceImpl();
-  final RecordingTimerService _timerService = RecordingTimerServiceImpl();
-
   bool _isInitialized = false;
 
+  CameraCubit get _cameraCubit => context.read<CameraCubit>();
+
+  CameraUtil get _cameraUtil => widget.cameraUtil;
 
   @override
   void initState() {
@@ -31,61 +32,9 @@ class _CameraState extends State<Camera> {
     _initializeCamera();
   }
 
-  Future<void> _initializeCamera() async {
-    final success = await _cameraService.initialize();
-    if (success) {
-      setState(() => _isInitialized = true);
-    }
-  }
-
-  Future<void> _switchCamera() async {
-    await _cameraService.switchCamera();
-    setState(() {});
-  }
-
-  Future<void> _takeContent() async {
-    final cubit = context.read<CameraCubit>();
-    final state = cubit.state;
-
-    if (state.cameraMode == CameraMode.photo) {
-      await _takePhoto();
-    } else {
-      await _recordVideo();
-    }
-  }
-
-  Future<void> _takePhoto() async {
-    final cubit = context.read<CameraCubit>();
-    final file = await _cameraService.takePhoto();
-
-    if (file == null) return;
-
-    await cubit.showFlashOverlayOnce();
-    await _mediaStoreService.saveImage(File(file.path));
-  }
-
-  Future<void> _recordVideo() async {
-    final cubit = context.read<CameraCubit>();
-    final isRecording = cubit.state.isRecording;
-
-    if (isRecording) {
-      final file = await _cameraService.stopVideoRecording();
-      if (file != null) {
-        _timerService.stop();
-        cubit.setIsRecording(false);
-        await _mediaStoreService.saveVideo(File(file.path));
-      }
-    } else {
-      await _cameraService.startVideoRecording();
-      _timerService.start(onTick: cubit.updateRecordingDuration);
-      cubit.setIsRecording(true);
-    }
-  }
-
   @override
   void dispose() {
-    _cameraService.controller?.dispose();
-    _timerService.stop();
+    _cameraUtil.controller?.dispose();
     super.dispose();
   }
 
@@ -93,7 +42,7 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return BlocBuilder<CameraCubit, CameraState>(
       builder: (context, state) {
-        final controller = _cameraService.controller;
+        final controller = _cameraUtil.controller;
 
         if (!_isInitialized || controller == null || !controller.value.isInitialized) {
           return const Scaffold(
@@ -211,5 +160,49 @@ class _CameraState extends State<Camera> {
         );
       },
     );
+  }
+
+  Future<void> _initializeCamera() async {
+    final success = await _cameraUtil.initialize();
+    if (success) {
+      setState(() => _isInitialized = true);
+    }
+  }
+
+  Future<void> _switchCamera() async {
+    await _cameraUtil.switchCamera();
+    setState(() {});
+  }
+
+  Future<void> _takeContent() async {
+    final cubit = context.read<CameraCubit>();
+    final state = cubit.state;
+
+    if (state.cameraMode == CameraMode.photo) {
+      await _takePhoto();
+    } else {
+      await _recordVideo();
+    }
+  }
+
+  Future<void> _takePhoto() async {
+    final file = await _cameraUtil.takePhoto();
+
+    if (file == null) return;
+
+    await _cameraCubit.saveOverlay(file.path);
+  }
+
+  Future<void> _recordVideo() async {
+    final cubit = context.read<CameraCubit>();
+    final isRecording = cubit.state.isRecording;
+
+    if (isRecording) {
+      final file = await _cameraUtil.stopVideoRecording();
+      if (file != null) await _cameraCubit.stopVideoRecording(file.path);
+    } else {
+      await _cameraUtil.startVideoRecording();
+      await _cameraCubit.startVideoRecording();
+    }
   }
 }

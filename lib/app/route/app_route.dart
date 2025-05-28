@@ -39,10 +39,12 @@ class AppRoute {
           (context, state) => CupertinoPage(
             child: BlocProvider(
               create:
-                  (context) => CameraCubit(
-                    serviceLocator.get(),
-                  ),
-              child: const Camera(),
+                (context) => CameraCubit(
+                  serviceLocator.get(),
+                  serviceLocator.get(),
+                  serviceLocator.get(),
+                ),
+              child: Camera(cameraUtil: CameraUtil()),
             ),
           ),
     );
