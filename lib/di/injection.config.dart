@@ -9,7 +9,6 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:block_flow/services/camera_service.dart' as _i699;
 import 'package:block_flow/services/media_store_service.dart' as _i8;
 import 'package:block_flow/services/pick_image_service.dart' as _i607;
 import 'package:block_flow/services/recording_timer_service.dart' as _i32;
@@ -28,7 +27,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i607.PickImageService>(() => _i607.PickImageServiceImpl());
     gh.factory<_i8.MediaStoreService>(() => _i8.MediaStoreServiceImpl());
-    gh.factory<_i699.CameraService>(() => _i699.CameraServiceImpl());
     return this;
   }
 }
