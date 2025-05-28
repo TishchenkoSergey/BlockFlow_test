@@ -49,4 +49,4 @@ flutter run
 
 The Presenter Layer is responsible for presenting data to the user. It includes the presentation logic and state
 management. For detailed guidelines on how to structure the presenter layer, refer to
-the [Presenter Layer Guide](doc/style/presenter.md).
+the [Presenter Layer Guide](doc/presenter.md).
